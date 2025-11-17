@@ -1,3 +1,6 @@
+[build]
+publish = "public"
+
 [[redirects]]
 from = "/*"
 to = "https://ninetwelvers-errors.vercel.app/errors/404"
