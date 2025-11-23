@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBAH KODE JADI FILE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background dengan video */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        /* Overlay untuk meningkatkan keterbacaan */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.05)
+            );
+            transform: rotate(30deg);
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .file-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .file-type-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .file-type-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .file-type-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-input-container {
+            margin-bottom: 25px;
+        }
+
+        .code-input-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            resize: vertical;
+            backdrop-filter: blur(5px);
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .filename-input {
+            margin-bottom: 25px;
+        }
+
+        .filename-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .filename-input input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(5px);
+        }
+
+        .filename-input input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .loading-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 20px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .success-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.3);
+            border-radius: 10px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .glass-card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .file-type-selector {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video autoplay  loop class="background-video">
+        <source src="https://files.cloudkuimages.guru/videos/92872ede7c06.mp4" type="video/mp4">
+        Browser iwak jika ogak dukung.
+    </video>
+    
+    <!-- Overlay untuk meningkatkan keterbacaan -->
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <div class="glass-card">
+            <h1>Code Converter & Downloader</h1>
+            
+            <div class="file-type-selector">
+                <button class="file-type-btn active" data-type="html">HTML</button>
+                <button class="file-type-btn" data-type="css">CSS</button>
+                <button class="file-type-btn" data-type="js">JavaScript</button>
+            </div>
+            
+            <div class="code-input-container">
+                <label for="codeInput">Paste kode Anda di sini:</label>
+                <textarea id="codeInput" placeholder="Tempel kode HTML, CSS, atau JavaScript Anda di sini..."></textarea>
+            </div>
+            
+            <div class="filename-input">
+                <label for="filenameInput">Nama file (tanpa ekstensi):</label>
+                <input type="text" id="filenameInput" placeholder="misalnya: index">
+            </div>
+            
+            <button class="download-btn" id="downloadBtn">Convert & Download</button>
+            
+            <div class="loading-bar" id="loadingBar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            
+            <div class="success-message" id="successMessage">
+                File berhasil diunduh!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileTypeBtns = document.querySelectorAll('.file-type-btn');
+            const codeInput = document.getElementById('codeInput');
+            const filenameInput = document.getElementById('filenameInput');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingProgress = document.getElementById('loadingProgress');
+            const successMessage = document.getElementById('successMessage');
+            
+            let currentFileType = 'html';
+            
+            // Mengatur jenis file aktif
+            fileTypeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    fileTypeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFileType = this.getAttribute('data-type');
+                });
+            });
+            
+            // Fungsi untuk mengunduh file
+            downloadBtn.addEventListener('click', function() {
+                const code = codeInput.value.trim();
+                let filename = filenameInput.value.trim();
+                
+                if (!code) {
+                    alert('Silakan masukkan kode terlebih dahulu!');
+                    return;
+                }
+                
+                if (!filename) {
+                    filename = 'file';
+                }
+                
+                // Tampilkan loading bar
+                loadingBar.style.display = 'block';
+                loadingProgress.style.width = '0%';
+                
+                // Simulasi proses loading
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        
+                        // Buat file dan unduh
+                        createAndDownloadFile(code, filename, currentFileType);
+                        
+                        // Tampilkan pesan sukses
+                        successMessage.style.display = 'block';
+                        
+                        // Sembunyikan loading bar setelah beberapa detik
+                        setTimeout(() => {
+                            loadingBar.style.display = 'none';
+                            successMessage.style.display = 'none';
+                        }, 3000);
+                    }
+                    loadingProgress.style.width = `${progress}%`;
+                }, 100);
+            });
+            
+            // Fungsi untuk membuat dan mengunduh file
+            function createAndDownloadFile(code, filename, fileType) {
+                const extension = fileType === 'html' ? '.html' : 
+                                 fileType === 'css' ? '.css' : '.js';
+                
+                const fullFilename = filename + extension;
+                
+                // Buat blob dari kode
+                const blob = new Blob([code], { type: 'text/plain' });
+                
+                // Buat URL untuk blob
+                const url = URL.createObjectURL(blob);
+                
+                // Buat elemen anchor untuk download
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fullFilename;
+                
+                // Klik anchor untuk memulai download
+                document.body.appendChild(a);
+                a.click();
+                
+                // Bersihkan
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
