@@ -1,0 +1,383 @@
+:root {
+  --pastel-pink: #FFD6E7;
+  --pastel-blue: #C1E3FF;
+  --pastel-green: #C3F7B5;
+  --pastel-yellow: #FFF2B2;
+  --pastel-purple: #E3D4FF;
+  --neobrut-black: #1A1A1A;
+  --neobrut-shadow: 8px 8px 0px #000;
+  --neobrut-shadow-sm: 4px 4px 0px #000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-blue));
+  min-height: 100vh;
+  padding: 20px;
+  color: var(--neobrut-black);
+}
+
+.poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.neobrut-card {
+  border: 3px solid var(--neobrut-black);
+  border-radius: 20px;
+  box-shadow: var(--neobrut-shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.neobrut-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 12px 12px 0px #000;
+}
+
+.neobrut-btn {
+  border: 3px solid var(--neobrut-black);
+  border-radius: 12px;
+  box-shadow: var(--neobrut-shadow-sm);
+  transition: all 0.2s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.neobrut-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px #000;
+}
+
+.neobrut-btn:active {
+  transform: translateY(0);
+  box-shadow: 2px 2px 0px #000;
+}
+
+.bg-pastel-pink {
+  background-color: var(--pastel-pink);
+}
+
+.bg-pastel-blue {
+  background-color: var(--pastel-blue);
+}
+
+.bg-pastel-green {
+  background-color: var(--pastel-green);
+}
+
+.bg-pastel-yellow {
+  background-color: var(--pastel-yellow);
+}
+
+.bg-pastel-purple {
+  background-color: var(--pastel-purple);
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--neobrut-black);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  
+  50% {
+    transform: scale(1.05);
+  }
+  
+  100% {
+    transform: scale(1);
+  }
+}
+
+.glitch-text {
+  position: relative;
+  font-weight: 800;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--pastel-green);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--pastel-pink);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(42px, 9999px, 74px, 0);
+  }
+  
+  5% {
+    clip: rect(76px, 9999px, 31px, 0);
+  }
+  
+  10% {
+    clip: rect(54px, 9999px, 26px, 0);
+  }
+  
+  15% {
+    clip: rect(28px, 9999px, 87px, 0);
+  }
+  
+  20% {
+    clip: rect(64px, 9999px, 50px, 0);
+  }
+  
+  25% {
+    clip: rect(32px, 9999px, 25px, 0);
+  }
+  
+  30% {
+    clip: rect(84px, 9999px, 39px, 0);
+  }
+  
+  35% {
+    clip: rect(20px, 9999px, 42px, 0);
+  }
+  
+  40% {
+    clip: rect(60px, 9999px, 83px, 0);
+  }
+  
+  45% {
+    clip: rect(15px, 9999px, 12px, 0);
+  }
+  
+  50% {
+    clip: rect(66px, 9999px, 102px, 0);
+  }
+  
+  55% {
+    clip: rect(34px, 9999px, 73px, 0);
+  }
+  
+  60% {
+    clip: rect(62px, 9999px, 49px, 0);
+  }
+  
+  65% {
+    clip: rect(71px, 9999px, 32px, 0);
+  }
+  
+  70% {
+    clip: rect(23px, 9999px, 55px, 0);
+  }
+  
+  75% {
+    clip: rect(45px, 9999px, 12px, 0);
+  }
+  
+  80% {
+    clip: rect(68px, 9999px, 90px, 0);
+  }
+  
+  85% {
+    clip: rect(18px, 9999px, 64px, 0);
+  }
+  
+  90% {
+    clip: rect(52px, 9999px, 29px, 0);
+  }
+  
+  95% {
+    clip: rect(38px, 9999px, 77px, 0);
+  }
+  
+  100% {
+    clip: rect(12px, 9999px, 43px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+  
+  5% {
+    clip: rect(52px, 9999px, 74px, 0);
+  }
+  
+  10% {
+    clip: rect(79px, 9999px, 85px, 0);
+  }
+  
+  15% {
+    clip: rect(75px, 9999px, 5px, 0);
+  }
+  
+  20% {
+    clip: rect(67px, 9999px, 61px, 0);
+  }
+  
+  25% {
+    clip: rect(14px, 9999px, 79px, 0);
+  }
+  
+  30% {
+    clip: rect(73px, 9999px, 58px, 0);
+  }
+  
+  35% {
+    clip: rect(62px, 9999px, 30px, 0);
+  }
+  
+  40% {
+    clip: rect(23px, 9999px, 98px, 0);
+  }
+  
+  45% {
+    clip: rect(34px, 9999px, 68px, 0);
+  }
+  
+  50% {
+    clip: rect(76px, 9999px, 91px, 0);
+  }
+  
+  55% {
+    clip: rect(88px, 9999px, 12px, 0);
+  }
+  
+  60% {
+    clip: rect(31px, 9999px, 45px, 0);
+  }
+  
+  65% {
+    clip: rect(18px, 9999px, 53px, 0);
+  }
+  
+  70% {
+    clip: rect(69px, 9999px, 32px, 0);
+  }
+  
+  75% {
+    clip: rect(55px, 9999px, 80px, 0);
+  }
+  
+  80% {
+    clip: rect(11px, 9999px, 16px, 0);
+  }
+  
+  85% {
+    clip: rect(93px, 9999px, 31px, 0);
+  }
+  
+  90% {
+    clip: rect(44px, 9999px, 62px, 0);
+  }
+  
+  95% {
+    clip: rect(27px, 9999px, 73px, 0);
+  }
+  
+  100% {
+    clip: rect(66px, 9999px, 39px, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .neobrut-card {
+    box-shadow: 4px 4px 0px #000;
+  }
+  
+  .neobrut-card:hover {
+    box-shadow: 6px 6px 0px #000;
+  }
+  
+  .neobrut-btn {
+    box-shadow: 3px 3px 0px #000;
+  }
+  
+  .neobrut-btn:hover {
+    box-shadow: 4px 4px 0px #000;
+  }
+}
+
+/* Notification styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  min-width: 300px;
+  max-width: 400px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pastel-pink);
+  border: 2px solid var(--neobrut-black);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pastel-blue);
+  border: 2px solid var(--neobrut-black);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pastel-green);
+}
